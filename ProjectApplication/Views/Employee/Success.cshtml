@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Employee List";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Employee List</h2>
+
+    <table id="employeeTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Gender</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('#employeeTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "@Url.Action("GetEmployees", "Employee")",
+                    "type": "POST"
+                },
+                "columns": [
+                    { "data": "fullName" },
+                    { "data": "email" },
+                    { "data": "department" },
+                    { "data": "gender" },
+                    { "data": "isActive", "render": function (data) { return data ? "Yes" : "No"; } }
+                ]
+            });
+        });
+    </script>
+}
